@@ -74,6 +74,11 @@ class TradeListView(LoginRequiredMixin, django_filters.views.FilterView):
         qs = qs.prefetch_related("groups")
         return qs
 
+    def get_form_kwargs(self) -> Dict[str, Any]:
+        kwargs = super().get_form_kwargs()
+        kwargs["account_id_choices"] = get_distinct_account_ids(self.request.user.id)
+        return kwargs
+
 
 class TradeDetailView(LoginRequiredMixin, DetailView, UpdateView):
     model = Trade

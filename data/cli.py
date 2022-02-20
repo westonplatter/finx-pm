@@ -30,9 +30,13 @@ def copy():
         os.remove(file)
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    lsc_data_path = dir_path + "/../../finx-ib-reports/data/*close_trades*"
+    lsc_data_path = dir_path + "/../../finx-ib-reports/data/*trades.csv"
 
     for file in glob.glob(lsc_data_path):
+        # hack to only copy [0-9]_trades.csv files
+        if "close" in file:
+            continue
+
         print(f"Copying {file}")
         fn = file.split("/")[-1]
         dest = f"{dir_path}/{fn}"

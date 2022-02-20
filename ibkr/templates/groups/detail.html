@@ -12,6 +12,10 @@
     <input type="submit">
   </form>
 
+  </br>
+
+  <p>Aggregate Cost: {{object.trades_cost|floatformat:2|intcomma}}</p>
+
   <br/>
 
   <table class="table table-striped">
@@ -21,9 +25,22 @@
         <th>Symbol</th>
         <th>Underlying Symbol</th>
         <th>Executed At</th>
-        <th>Fifo PnL Realized</th>
-        <th>(CumSum) Fifo PnL Realized</th>
+        <th>O/C</th>
+        <th colspan=2>Cost</th>
+        <th colspan=2>PnL Realized</th>
         <th>Account</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Trade</th>
+        <th>Cumulative</th>
+        <th>Trade</th>
+        <th>Cumulative</th>
+        <th></th>
       </tr>
     </thead>
 
@@ -34,8 +51,14 @@
             <td>{{ trade.symbol }}</td>
             <td>{{ trade.underlying_symbol }}</td>
             <td>{{ trade.executed_at_json }}</td>
+            <td>{{ trade.open_close_indicator }}</td>
+
+            <td>{{ trade.cost|floatformat:2|intcomma }}</td>
+            <td>{{ trade.cost_cumsum|floatformat:2|intcomma }}</td>
+
             <td>{{ trade.fifo_pnl_realized|floatformat:2|intcomma }}</td>
             <td>{{ trade.fifo_pnl_realized_cumsum|floatformat:2|intcomma }}</td>
+
             <td>{{ trade.account_id }}</td>
           </tr>
       {% endfor %}

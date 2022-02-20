@@ -32,6 +32,7 @@ class Trade(models.Model, BaseModelMixin):
     fifo_pnl_realized = models.DecimalField(**decimal_field_defaults)
     fx_pnl = models.DecimalField(**decimal_field_defaults)
     mtm_pnl = models.DecimalField(**decimal_field_defaults)
+    cost = models.DecimalField(**decimal_field_defaults)
     buy_sell = models.CharField(**char_field_defaults)
 
     executed_at = models.DateTimeField(null=False)
@@ -94,6 +95,7 @@ class Group(models.Model, BaseModelMixin):
         qs = self.trades.all().order_by("-executed_at")
         df = read_frame(qs)
         df["fifo_pnl_realized_cumsum"] = df.fifo_pnl_realized[::-1].cumsum()
+        df["cost_cumsum"] = df.cost[::-1].cumsum()
         if len(df.index) > 0:
             df["executed_at_json"] = df.executed_at.dt.strftime("%b %d, %Y, %-I:%M %p")
         records = df.to_json(orient="records")
@@ -102,6 +104,10 @@ class Group(models.Model, BaseModelMixin):
     @property
     def trades_realized_pnl(self):
         return sum([x.fifo_pnl_realized for x in self.trades.all()])
+
+    @property
+    def trades_cost(self):
+        return sum([x.cost for x in self.trades.all() if x.asset_category != "FUT"])
 
     @property
     def trades_mtm_pnl(self):

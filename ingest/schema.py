@@ -92,11 +92,13 @@ class TradeMutation(graphene.Mutation):
         fifoPnlRealized = graphene.Float(required=False)
         fxPnl = graphene.Float(required=False)
         mtmPnl = graphene.Float(required=False)
+        cost = graphene.Float(required=False)
         buySell = graphene.String(required=False)
         description = graphene.String(required=False)
         expiry = graphene.DateTime(required=False)
         strike = graphene.Float(required=False)
         multiplier = graphene.Float(required=False)
+
 
     trade = graphene.Field(TradeType)
 
@@ -114,6 +116,7 @@ class TradeMutation(graphene.Mutation):
         fifoPnlRealized=None,
         fxPnl=None,
         mtmPnl=None,
+        cost=None,
         buySell=None,
         executedAt=None,
         description=None,
@@ -132,6 +135,7 @@ class TradeMutation(graphene.Mutation):
             fifo_pnl_realized=fifoPnlRealized,
             fx_pnl=fxPnl,
             mtm_pnl=mtmPnl,
+            cost=cost,
             buy_sell=buySell,
             executed_at=executedAt,
             description=description,

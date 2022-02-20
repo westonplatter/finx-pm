@@ -73,6 +73,7 @@ class CreateTradeMutation(Mutation):
     fifoPnlRealized: float
     fxPnl: float
     mtmPnl: float
+    cost: float
     buySell: str
     # notes: str
 
@@ -90,6 +91,7 @@ class CreateTradeMutation(Mutation):
                 $fifoPnlRealized: Float,
                 $fxPnl: Float,
                 $mtmPnl: Float,
+                $cost: Float,
                 $buySell: String,
                 $description: String,
                 $expiry: DateTime,
@@ -108,6 +110,7 @@ class CreateTradeMutation(Mutation):
                     fifoPnlRealized: $fifoPnlRealized,
                     fxPnl: $fxPnl,
                     mtmPnl: $mtmPnl,
+                    cost: $cost,
                     buySell: $buySell,
                     description: $description,
                     expiry: $expiry,
@@ -167,6 +170,10 @@ def submit_trades_from_file(fn: str, import_all: bool):
     df = transform(df)
     fields_to_extract = list(CreateTradeMutation.schema()["properties"].keys())
     df = df[fields_to_extract].copy()
+
+    # manual override for only 2022 data
+    df["executed_at_date"] = pd.to_datetime(df["executedAt"]).dt.date
+    df = df[df["executed_at_date"] >= datetime.date(2021, 12, 31)]
 
     if not import_all:
         # get min date

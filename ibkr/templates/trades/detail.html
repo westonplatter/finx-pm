@@ -15,6 +15,10 @@
     FIFO PnL Realized: {{ object.fifo_pnl_realized }}
   </p>
 
+  <p>
+    Cost: {{ object.cost }}
+  </p>
+
   <form method="post" action="#">
     {% csrf_token %}
     {{ form.as_p }}

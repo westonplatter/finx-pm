@@ -25,6 +25,7 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>trades_cost</th>
           <th>trades_realized_pnl</th>
           <th>Active</th>
           <th>AccountId</th>
@@ -35,6 +36,7 @@
         {% for group in object_list %}
             <tr>
               <td><a href="{% url 'ibkr:group-detail' pk=group.id%}">{{ group.name }}</a></td>
+              <td>{{ group.trades_cost|floatformat:2|intcomma }}</td>
               <td>{{ group.trades_realized_pnl|floatformat:2|intcomma }}</td>
               <td>{{ group.active }}</td>
               <td>{{ group.account_id }}</td>
