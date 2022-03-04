@@ -23,14 +23,16 @@
       <tr>
         <th>Id</th>
         <th>Symbol</th>
-        <th>Underlying Symbol</th>
+        <th>Underlying</th>
         <th>Executed At</th>
+        <th>B/S</th>
         <th>O/C</th>
         <th colspan=2>Cost</th>
         <th colspan=2>PnL Realized</th>
         <th>Account</th>
       </tr>
       <tr>
+        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -51,6 +53,7 @@
             <td>{{ trade.symbol }}</td>
             <td>{{ trade.underlying_symbol }}</td>
             <td>{{ trade.executed_at_json }}</td>
+            <td>{{ trade.buy_sell }}</td>
             <td>{{ trade.open_close_indicator }}</td>
 
             <td>{{ trade.cost|floatformat:2|intcomma }}</td>
