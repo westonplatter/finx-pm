@@ -1,3 +1,5 @@
+# Migrated to [finx-tracker](https://github.com/westonplatter/finx-tracker)
+
 # portfolio management
 See trade history and manage positions.
 
